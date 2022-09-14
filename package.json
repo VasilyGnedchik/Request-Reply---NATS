@@ -1,0 +1,26 @@
+{
+  "name": "ReqResNATS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "api": "ts-node ./packages/api/index.ts",
+    "storage": "ts-node ./packages/storage/index.ts",
+    "start": "concurrently --kill-others \"npm run api\" \"npm run storage\""
+  },
+  "keywords": [],
+  "author": "Vasily Gnedchik",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^13.7.0",
+    "@types/uuid": "^3.4.7",
+    "concurrently": "^7.4.0",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.0.0",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "nats": "^1.4.0",
+    "uuid": "^3.4.0"
+  }
+}
