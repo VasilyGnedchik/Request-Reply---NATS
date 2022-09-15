@@ -1,20 +1,22 @@
-import { UserRepository } from '../repository/User';
 import { Msg } from '../../interfaces';
+import { User } from "../repository/Entities/UserEntity";
+import { myDataSource } from "../app-data-source"
 
-export interface GetByUserId {
-  userId: string;
+export interface EmptyObj {
 }
 
-export async function getByUserId(request: Msg<GetByUserId>) {
+export async function getUsers(request: Msg<EmptyObj>) {
   try {
-    console.log('trying')
-    const userRepository = new UserRepository();
-    const userId = request.userId;
-    const users = await userRepository.getByUserId(userId);
-    return users;
-
+    let users = await myDataSource.getRepository(User).find()
+    if(users.length===0){
+      const newUser = new User();
+      newUser.fullname = "Иванов Иван";
+      newUser.phone = "79998877665";
+      await myDataSource.getRepository(User).save(newUser);
+      users = await myDataSource.getRepository(User).find()
+    }
+    return JSON.stringify(users);
   } catch (error) {
     console.error(error);
-    (this as any).createError(error);
   }
 }
